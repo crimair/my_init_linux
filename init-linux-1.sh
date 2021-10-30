@@ -21,7 +21,7 @@ if $isWSL then
 </fontconfig>
 EOS
 
-cat << 'EOS' >> ~/.bashrc
+cat << 'EOS' > ~/.bashrc
 
 ## for fcitx-mozc
 if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
