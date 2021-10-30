@@ -36,6 +36,7 @@ echo ${pass} | sudo -S apt-get install -y silversearcher-ag zip
 echo ${pass} | sudo -S snap install drawio
 echo ${pass} | sudo -S apt-get install -y gtkterm
 echo ${pass} | sudo -S apt-get install -y verilator gtkwave
+echo ${pass} | sudo -S apt-get install -y global
 # nodejs
 echo ${pass} | sudo -S apt-get install -y nodejs npm
 echo ${pass} | sudo -S npm install -g n
