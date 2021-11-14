@@ -9,13 +9,13 @@ if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
 fi
 
 echo ${pass} | sudo -S apt-get update
-echo ${pass} | sudo -S add-apt-repository -y ppa:kelleyk/emacs
+#echo ${pass} | sudo -S add-apt-repository -y ppa:kelleyk/emacs
 echo ${pass} | sudo -S apt-get -y upgrade
 echo ${pass} | sudo -S apt-get install -y git build-essential openssl libssl-dev libbz2-dev libreadline-dev libsqlite3-dev zlib1g-dev libffi-dev liblzma-dev
-echo ${pass} | sudo -S apt-get install -y flex bison libssl-dev libelf-dev libncurses-dev autoconf libudev-dev libtool
+echo ${pass} | sudo -S apt-get install -y flex bison libelf-dev libncurses-dev autoconf libudev-dev libtool
 echo ${pass} | sudo -S apt-get install -y x11-apps net-tools
 echo ${pass} | sudo -S apt-get install -y vim-gtk3
-echo ${pass} | sudo -S apt-get install -y emacs27 emacs-mozc
+echo ${pass} | sudo -S apt-get install -y emacs emacs-mozc
 if $isWSL then
     echo ${pass} | sudo -S apt-get install -y fcitx-mozc dbus-x11
     echo ${pass} | sudo -S sh -c "dbus-uuidgen > /var/lib/dbus/machine-id"
@@ -32,7 +32,7 @@ echo ${pass} | sudo -S update-alternatives --install /usr/bin/cc cc /usr/bin/cla
 echo ${pass} | sudo -S update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-12 100
 echo ${pass} | sudo -S update-alternatives --install /usr/bin/lld lld /usr/bin/lld-12 100
 # tools
-echo ${pass} | sudo -S apt-get install -y silversearcher-ag zip
+echo ${pass} | sudo -S apt-get install -y silversearcher-ag
 echo ${pass} | sudo -S snap install drawio
 echo ${pass} | sudo -S apt-get install -y gtkterm
 echo ${pass} | sudo -S apt-get install -y verilator gtkwave
@@ -42,7 +42,6 @@ echo ${pass} | sudo -S apt-get install -y nodejs npm
 echo ${pass} | sudo -S npm install -g n
 echo ${pass} | sudo -S n stable
 echo ${pass} | sudo -S apt-get purge -y nodejs npm
-echo ${pass} | sudo -S npm install -g pyright
 # docker
 echo ${pass} | sudo -S apt-get remove -y docker docker-engine docker.io containerd runc
 echo ${pass} | sudo -S apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
