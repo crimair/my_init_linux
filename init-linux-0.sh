@@ -8,6 +8,8 @@ if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
     echo "WSL"
 fi
 
+echo "Emacs*useXIM: false" > .Xresources
+
 echo ${pass} | sudo -S apt-get update
 #echo ${pass} | sudo -S add-apt-repository -y ppa:kelleyk/emacs
 echo ${pass} | sudo -S apt-get -y upgrade
@@ -41,6 +43,7 @@ echo ${pass} | sudo -S apt-get install -y global
 echo ${pass} | sudo -S apt-get install -y nodejs npm
 echo ${pass} | sudo -S npm install -g n
 echo ${pass} | sudo -S n stable
+echo ${pass} | sudo -S npm install -g vmd
 echo ${pass} | sudo -S apt-get purge -y nodejs npm
 # docker
 echo ${pass} | sudo -S apt-get remove -y docker docker-engine docker.io containerd runc
@@ -71,5 +74,8 @@ wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key a
 sudo add-apt-repository "deb http://download.virtualbox.org/virtualbox/debian focal contrib"
 echo ${pass} | sudo -S apt-get update
 echo ${pass} | sudo -S apt-get install -y virtualbox-6.1
+# etc
+echo ${pass} | sudo -S gpasswd -a $USER dialout
+
 exit
 
