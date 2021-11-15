@@ -17,6 +17,7 @@ if [ ! -f emacs-27.2 ]; then
 fi
 
 cd emacs-27.2
-env CC="clang -fobjc-arc" CFLAGS="-O3" LDFLAGS="-O3" ./configure --with-xwidgets
+#./configure --with-xwidgets
+env CC="clang -fobjc-arc" CFLAGS="-O2" LDFLAGS="-O2" ./configure --with-xwidgets
 make -j8
 echo ${pass} | sudo -S make install
