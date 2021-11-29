@@ -12,7 +12,7 @@ git clone https://github.com/pyenv/pyenv-virtualenv.git ${HOME}/.pyenv/plugins/p
 ## generate backup directory
 mkdir -p ~/.back
 
-if $isWSL then
+if $isWSL ; then
     cat << 'EOS' | sudo tee /etc/fonts/local.conf
 <?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
