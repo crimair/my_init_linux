@@ -20,6 +20,7 @@ if $isWSL ; then
     <dir>/mnt/c/Windows/Fonts</dir>
 </fontconfig>
 EOS
+fi
 
 cat << 'EOS' > ~/.bashrc
 
@@ -37,8 +38,11 @@ fi
 
 ## WSL X-Window
 if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
-   export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
+   ### WSL2
+   export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | head -n 1 | awk '{print $2}'):0.0
    export LIBGL_ALWAYS_INDIRECT=0
+   ### WSL1
+   #export DISPLAY=127.0.0.1:0.0
 fi
 
 ## default
@@ -184,4 +188,4 @@ EOS
 
 
 ## home directory rename
-LANG=C xdg-user-dirs-gtk-update
+LANG=C xdg-user-dirs-update
