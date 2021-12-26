@@ -19,6 +19,6 @@ fi
 
 cd emacs-27.2
 #./configure --with-xwidgets
-env CC="clang -fobjc-arc" CFLAGS="-O2" LDFLAGS="-O2" ./configure --with-xwidgets
+env CC="clang -fobjc-arc" CFLAGS="-O2 -march=native" LDFLAGS="-O2" ./configure --with-xwidgets
 make -j8
 echo ${pass} | sudo -S make install
