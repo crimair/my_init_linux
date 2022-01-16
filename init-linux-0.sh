@@ -8,7 +8,7 @@ if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
     echo "WSL"
 fi
 
-echo "Emacs*useXIM: false" > .Xresources
+echo "Emacs*useXIM: false" > ~/.Xresources
 
 echo ${pass} | sudo -S apt-get update
 #echo ${pass} | sudo -S add-apt-repository -y ppa:kelleyk/emacs
