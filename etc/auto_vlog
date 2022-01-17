@@ -1,0 +1,34 @@
+#!/bin/sh
+
+ROOT=/opt/intel/21.3/questa_fse/bin
+VLOG=$ROOT/vlog
+VLIB=$ROOT/vlib
+
+if [ -z "$*" ] ; then
+  exec $VLOG
+else
+  defwork=${2}/work
+  xdir=`dirname ${1}`
+  #echo "aa"
+  #echo $xdir
+  #echo $defwork >> ~/temp.txt
+  #echo "aa"
+  #exec pwd >> ~/temp.txt
+
+  if [ ! -d $defwork ] ; then
+    $VLIB $defwork
+  fi
+  exec $VLOG -sv -lint -quiet +incdir+../ +incdir+../../  +incdir+/opt/uvm-1.2/src -L /opt/intel/21.3/questa_fse/uvm-1.2 -work $defwork ${1}
+  #exec $VLOG -sv -quiet +incdir+../ +incdir+../../  -work $defwork ${1}
+fi
+
+# if [ -z "$*" ] ; then
+#   exec vlog
+# else
+#   defwork=$3/work
+#   shift
+#   if [ ! -d $defwork ] ; then
+#     vlib $defwork
+#   fi
+#   exec vlog -sv -lint -quiet -work $defwork $2
+# fi
