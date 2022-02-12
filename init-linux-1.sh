@@ -36,14 +36,14 @@ if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
     fi
 fi
 
-## WSL X-Window
-if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
-   ### WSL2
-   export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | head -n 1 | awk '{print $2}'):0.0
-   export LIBGL_ALWAYS_INDIRECT=0
-   ### WSL1
-   #export DISPLAY=127.0.0.1:0.0
-fi
+### WSL X-Window
+#if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
+#   ### WSL2
+#   export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | head -n 1 | awk '{print $2}'):0.0
+#   export LIBGL_ALWAYS_INDIRECT=0
+#   ### WSL1
+#   #export DISPLAY=127.0.0.1:0.0
+#fi
 
 ## default
 export LD_LIBRARY_PATH="";

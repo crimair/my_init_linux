@@ -16,6 +16,7 @@ echo ${pass} | sudo -S apt-get -y upgrade
 echo ${pass} | sudo -S apt-get install -y git build-essential openssl libssl-dev libbz2-dev libreadline-dev libsqlite3-dev zlib1g-dev libffi-dev liblzma-dev
 echo ${pass} | sudo -S apt-get install -y flex bison libelf-dev libncurses-dev autoconf libudev-dev libtool
 echo ${pass} | sudo -S apt-get install -y x11-apps net-tools
+echo ${pass} | sudo -S apt-get install -y language-pack-ja
 echo ${pass} | sudo -S apt-get install -y vim-gtk3
 echo ${pass} | sudo -S apt-get install -y emacs emacs-mozc
 if $isWSL ; then
