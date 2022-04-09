@@ -23,9 +23,21 @@ EOS
 fi
 
 cat << 'EOS' > ~/.bashrc
+#!/bin/bash
+
+## env switch
+isWSL=false
+if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
+    isWSL=true
+fi
+
+isDocker=false
+if [ -f /.dockerenv ]; then
+    isDocker=true
+fi
 
 ## for fcitx-mozc
-if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
+if  $isWSL ; then
     export GTK_IM_MODULE=fcitx
     export QT_IM_MODULE=fcitx
     export XMODIFIERS=@im=fcitx
@@ -37,7 +49,7 @@ if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
 fi
 
 ### WSL X-Window
-#if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
+#if  $isWSL ; then
 #   ### WSL2
 #   export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | head -n 1 | awk '{print $2}'):0.0
 #   export LIBGL_ALWAYS_INDIRECT=0
@@ -144,7 +156,11 @@ export MAILADDRESS="matsukura@"
 export COMPANY="None"
 
 #### prompt ####
-export PS1="[\u@\h] \[\e[0;31m\]\w\[\e[00m\] \[\e[0;35m\][\$(__get_branch)]\[\e[00m\] (\#) \n$ "
+if [ $isDocker ]; then
+    export PS1="[\u@Docker] \[\e[0;36m\]\w\[\e[00m\] \[\e[0;35m\][\$(__get_branch)]\[\e[00m\] (\#) \n$ "
+else
+    export PS1="[\u@\h] \[\e[0;31m\]\w\[\e[00m\] \[\e[0;35m\][\$(__get_branch)]\[\e[00m\] (\#) \n$ "
+fi
 
 ## pyenv
 alias pyinit='\
@@ -161,7 +177,9 @@ export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$GOPATH/bin
 
 ## caps -> ctrl
-setxkbmap -option ctrl:nocaps
+if [ ! $isWSL -a ! $isDocker ]; then
+    setxkbmap -option ctrl:nocaps
+fi
 
 ## Perl cpan local
 export PERL_CPANM_OPT="--local-lib=~/perl5"
