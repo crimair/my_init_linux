@@ -1,3 +1,13 @@
-
-  (add-hook 'verilog-mode-hook 'auto-complete-mode)
-  (add-hook 'verilog-mode-hook 'company-mode)
+;;native compile
+(setq package-native-compile t)
+npm install -g @imc-trading/svlangserver
+;;;; lsp-verilog
+(require 'lsp-verilog)
+;; (custom-set-variables
+;;  '(lsp-clients-svlangserver-launchConfiguration "/tools/verilator -sv --lint-only -Wall")
+;;  '(lsp-clients-svlangserver-formatCommand "/tools/verible-verilog-format"))
+(add-hook 'verilog-mode-hook #'lsp-deferred)
+;;;; .dir-locals.el 個別設定する場合
+;; ((verilog-mode (lsp-clients-svlangserver-workspace-additional-dirs . ("/some/lib/path"))
+;;                (lsp-clients-svlangserver-includeIndexing . ("src/**/*.{sv,svh}"))
+;;                (lsp-clients-svlangserver-excludeIndexing . ("src/test/**/*.{sv,svh}"))))
