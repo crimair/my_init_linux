@@ -25,7 +25,7 @@ if $isWSL ; then
 fi
 # llvm
 echo ${pass} | sudo -S apt-get install -y python python3 zip zlib1g-dev xz-utils wget curl
-echo ${pass} | sudo -S apt-get install -y clang-12 clangd-12 lld-12 llvm-12
+echo ${pass} | sudo -S apt-get install -y clang-12 clangd-12 lld-12 llvm-12 lldb-12
 echo ${pass} | sudo -S apt-get install -y clang-format-12
 echo ${pass} | sudo -S apt-get install -y cmake
 echo ${pass} | sudo -S apt-get install -y ninja-build
@@ -33,8 +33,8 @@ echo ${pass} | sudo -S update-alternatives --install /usr/bin/clang++ clang++ /u
 echo ${pass} | sudo -S update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 100
 echo ${pass} | sudo -S update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
 echo ${pass} | sudo -S update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-12 100
-echo ${pass} | sudo -S update-alternatives --install /usr/bin/cc cc /usr/bin/clang-12 100
-echo ${pass} | sudo -S update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-12 100
+#echo ${pass} | sudo -S update-alternatives --install /usr/bin/cc cc /usr/bin/clang-12 100
+#echo ${pass} | sudo -S update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-12 100
 echo ${pass} | sudo -S update-alternatives --install /usr/bin/llvm-objdump llvm-objdump /usr/bin/llvm-objdump-12 100
 echo ${pass} | sudo -S update-alternatives --install /usr/bin/llvm-objcopy llvm-objcopy /usr/bin/llvm-objcopy-12 100
 echo ${pass} | sudo -S update-alternatives --install /usr/bin/llvm-as llvm-as /usr/bin/llvm-as-12 100

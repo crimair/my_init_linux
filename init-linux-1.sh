@@ -70,7 +70,7 @@ export SYSTEMC_INCLUDE="/usr/local/systemc-2.3.3/include"
 export SYSTEMC_LIBDIR="/usr/local/systemc-2.3.3/lib-linux64"
 
 ## not make core
-ulimit -c 0
+#ulimit -c 0
 ulimit -s unlimited
 
 ## EOF(Ctrl-D)
@@ -84,12 +84,12 @@ HISTFILESIZE=500000
 shopt -s histappend
 
 ## License Server
-export LM_LICENSE_FILE=""
+export LM_LICENSE_FILE="/opt/license/questa_license_202211.dat"
 export ARMLMD_LICENSE_FILE=""
 export XILINXD_LICENSE_FILE=""
 
 ## modelsim path
-export MTI_HOME="/opt/modelsim_ie/10.5b/modelsim_ase"
+export MTI_HOME="/opt/intel/21.3/questa_fse"
 export MODEL_TECH="${MTI_HOME}/bin"
 export PATH="${MODEL_TECH}:$PATH"
 
@@ -171,10 +171,11 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$PYENV_ROOT/shims:$PATH"
 
 ## Golang
-export GOROOT=${HOME}/go1.10.3
-export GOPATH=${HOME}/go
+export GOROOT=/usr/local/go
 export PATH=$PATH:$GOROOT/bin
-export PATH=$PATH:$GOPATH/bin
+
+## RISCV
+#export RISCV=${HOME}/workspace/riscv/toolchain
 
 ## caps -> ctrl
 if [ ! $isWSL -a ! $isDocker ]; then
