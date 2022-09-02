@@ -25,21 +25,23 @@ if $isWSL ; then
 fi
 # llvm
 echo ${pass} | sudo -S apt-get install -y python python3 zip zlib1g-dev xz-utils wget curl
-echo ${pass} | sudo -S apt-get install -y clang-12 clangd-12 lld-12 llvm-12 lldb-12
-echo ${pass} | sudo -S apt-get install -y clang-format-12
 echo ${pass} | sudo -S apt-get install -y cmake
 echo ${pass} | sudo -S apt-get install -y ninja-build
-echo ${pass} | sudo -S update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-12 100
-echo ${pass} | sudo -S update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 100
-echo ${pass} | sudo -S update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
-echo ${pass} | sudo -S update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-12 100
-#echo ${pass} | sudo -S update-alternatives --install /usr/bin/cc cc /usr/bin/clang-12 100
-#echo ${pass} | sudo -S update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-12 100
-echo ${pass} | sudo -S update-alternatives --install /usr/bin/llvm-objdump llvm-objdump /usr/bin/llvm-objdump-12 100
-echo ${pass} | sudo -S update-alternatives --install /usr/bin/llvm-objcopy llvm-objcopy /usr/bin/llvm-objcopy-12 100
-echo ${pass} | sudo -S update-alternatives --install /usr/bin/llvm-as llvm-as /usr/bin/llvm-as-12 100
-echo ${pass} | sudo -S update-alternatives --install /usr/bin/llvm-nm llvm-nm /usr/bin/llvm-nm-12 100
-echo ${pass} | sudo -S update-alternatives --install /usr/bin/ld.lld ld.lld /usr/bin/ld.lld-12 100
+## llvm
+LLVM_VER=14
+echo ${pass} | sudo -S apt-get install -y clang-${LLVM_VER} clangd-${LLVM_VER} lld-${LLVM_VER} llvm-${LLVM_VER} lldb-${LLVM_VER}
+echo ${pass} | sudo -S apt-get install -y clang-format-${LLVM_VER}
+echo ${pass} | sudo -S update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-${LLVM_VER} 100
+echo ${pass} | sudo -S update-alternatives --install /usr/bin/clang clang /usr/bin/clang-${LLVM_VER} 100
+echo ${pass} | sudo -S update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-${LLVM_VER} 100
+echo ${pass} | sudo -S update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-${LLVM_VER} 100
+#echo ${pass} | sudo -S update-alternatives --install /usr/bin/cc cc /usr/bin/clang-${LLVM_VER} 100
+#echo ${pass} | sudo -S update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-${LLVM_VER} 100
+echo ${pass} | sudo -S update-alternatives --install /usr/bin/llvm-objdump llvm-objdump /usr/bin/llvm-objdump-${LLVM_VER} 100
+echo ${pass} | sudo -S update-alternatives --install /usr/bin/llvm-objcopy llvm-objcopy /usr/bin/llvm-objcopy-${LLVM_VER} 100
+echo ${pass} | sudo -S update-alternatives --install /usr/bin/llvm-as llvm-as /usr/bin/llvm-as-${LLVM_VER} 100
+echo ${pass} | sudo -S update-alternatives --install /usr/bin/llvm-nm llvm-nm /usr/bin/llvm-nm-${LLVM_VER} 100
+echo ${pass} | sudo -S update-alternatives --install /usr/bin/ld.lld ld.lld /usr/bin/ld.lld-${LLVM_VER} 100
 # tools
 echo ${pass} | sudo -S apt-get install -y silversearcher-ag
 echo ${pass} | sudo -S snap install drawio
@@ -77,11 +79,7 @@ echo ${pass} | sudo -S apt-get update
 echo ${pass} | sudo -S apt-get install -y gnome-tweak-tool
 # virtualbox
 if ! $isWSL ; then
-   wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
-   wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
-   sudo add-apt-repository "deb http://download.virtualbox.org/virtualbox/debian focal contrib"
-   echo ${pass} | sudo -S apt-get update
-   echo ${pass} | sudo -S apt-get install -y virtualbox-6.1
+   echo ${pass} | sudo -S apt-get install -y virtualbox
    echo ${pass} | sudo -S gpasswd -a $USER vboxusers
 fi
 # etc
