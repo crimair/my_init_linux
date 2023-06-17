@@ -156,7 +156,7 @@ export MAILADDRESS="matsukura@"
 export COMPANY="None"
 
 #### prompt ####
-if [ $isDocker ]; then
+if $isDocker ; then
     export PS1="[\u@Docker] \[\e[0;36m\]\w\[\e[00m\] \[\e[0;35m\][\$(__get_branch)]\[\e[00m\] (\#) \n$ "
 else
     export PS1="[\u@\h] \[\e[0;31m\]\w\[\e[00m\] \[\e[0;35m\][\$(__get_branch)]\[\e[00m\] (\#) \n$ "
@@ -209,4 +209,16 @@ EOS
 
 
 ## home directory rename
-LANG=C xdg-user-dirs-update
+#LANG=C xdg-user-dirs-update
+LANGUAGE=C LC_MESSAGES=C xdg-user-dirs-gtk-update
+
+## gnome show seconds
+gsettings set org.gnome.desktop.interface clock-show-seconds true
+
+cat << EOF > ~/.config/mozc/ibus_config.textproto 
+engines {
+    name : "mozc-jp"
+    longname : "Mozc"
+    layout : "jp"
+}
+EOF

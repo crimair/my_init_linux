@@ -23,6 +23,9 @@ if $isWSL ; then
     echo ${pass} | sudo -S apt-get install -y fcitx-mozc dbus-x11
     echo ${pass} | sudo -S sh -c "dbus-uuidgen > /var/lib/dbus/machine-id"
 fi
+if ! $isWSL ; then
+    echo ${pass} | sudo -S apt-get install -y ibus-mozc mozc-utils-gui
+fi
 # llvm
 echo ${pass} | sudo -S apt-get install -y python python3 zip zlib1g-dev xz-utils wget curl
 echo ${pass} | sudo -S apt-get install -y cmake
@@ -76,14 +79,22 @@ echo ${pass} | sudo -S apt-get install -y google-chrome-stable
 # gnome
 echo ${pass} | sudo -S apt-add-repository universe
 echo ${pass} | sudo -S apt-get update
-echo ${pass} | sudo -S apt-get install -y gnome-tweak-tool
+echo ${pass} | sudo -S apt-get install -y gnome-tweaks
 # virtualbox
 if ! $isWSL ; then
    echo ${pass} | sudo -S apt-get install -y virtualbox
+   echo ${pass} | sudo -S apt-get install -y virtualbox-ext-pack
    echo ${pass} | sudo -S gpasswd -a $USER vboxusers
 fi
 # etc
 echo ${pass} | sudo -S gpasswd -a $USER dialout
 
-exit
+## ctrl nocaps
+echo ${pass} | sudo -S sed -i s/XKBO.*/XKBOPTIONS=\"ctrl:nocaps\"/ /etc/default/keyboard
+echo ${pass} | sudo -S sed -i s/XKBMODEL.*/XKBMODEL=\"pc106\"/ /etc/default/keyboard
 
+## application
+### nemo
+echo ${pass} | sudo -S apt-get install -y nemo
+
+exit
