@@ -6,24 +6,29 @@ if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
     echo "WSL"
 fi
 
-git clone https://github.com/yyuu/pyenv.git ~/.pyenv
-git clone https://github.com/pyenv/pyenv-virtualenv.git ${HOME}/.pyenv/plugins/pyenv-virtualenv
+
+# uvによるPython仮想環境セットアップ
+if ! command -v uv &> /dev/null; then
+    echo "uvが見つかりません。インストールします。"
+    # uv公式バイナリをダウンロードしてインストール
+    curl -Ls https://astral.sh/uv/install.sh | bash
+    export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+# プロジェクト用仮想環境作成例（.venv）
+if [ ! -d "$HOME/.venv" ]; then
+    uv venv $HOME/.venv
+fi
 
 ## generate backup directory
 mkdir -p ~/.back
 
-if $isWSL ; then
-    cat << 'EOS' | sudo tee /etc/fonts/local.conf
-<?xml version="1.0"?>
-<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
-<fontconfig>
-    <dir>/mnt/c/Windows/Fonts</dir>
-</fontconfig>
-EOS
-fi
-
-cat << 'EOS' > ~/.bashrc
+if false; then
+    cat << 'EOS' > ~/.bashrc
 #!/bin/bash
+
+## sudo補完
+complete -cf sudo
 
 ## env switch
 isWSL=false
@@ -37,24 +42,16 @@ if [ -f /.dockerenv ]; then
 fi
 
 ## for fcitx-mozc
-if  $isWSL ; then
-    export GTK_IM_MODULE=fcitx
-    export QT_IM_MODULE=fcitx
-    export XMODIFIERS=@im=fcitx
-    export DefaultIMModule=fcitx
+export GTK_IM_MODULE=fcitx5
+export QT_IM_MODULE=fcitx5
+export XMODIFIERS=@im=fcitx5
+export DefaultIMModule=fcitx5
+
+if [ $isWSL = true ]; then
     if [ $SHLVL = 1 ] ; then
         (fcitx-autostart > /dev/null 2>&1 &)
         xset -r 49  > /dev/null 2>&1
     fi
-fi
-
-## WSL X-Window
-if  $isWSL ; then
-   ### WSL2
-   export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | head -n 1 | awk '{print $2}'):0.0
-   export LIBGL_ALWAYS_INDIRECT=0
-   ### WSL1
-   #export DISPLAY=127.0.0.1:0.0
 fi
 
 ## default
@@ -156,30 +153,32 @@ export MAILADDRESS="matsukura@"
 export COMPANY="None"
 
 #### prompt ####
-if $isDocker ; then
+if [ $isDocker = true ]; then
     export PS1="[\u@Docker] \[\e[0;36m\]\w\[\e[00m\] \[\e[0;35m\][\$(__get_branch)]\[\e[00m\] (\#) \n$ "
 else
     export PS1="[\u@\h] \[\e[0;31m\]\w\[\e[00m\] \[\e[0;35m\][\$(__get_branch)]\[\e[00m\] (\#) \n$ "
 fi
 
 ## pyenv
-alias pyinit='\
-eval "$(pyenv init -)"; \
-eval "$(pyenv virtualenv-init -)"'
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-export PATH="$PYENV_ROOT/shims:$PATH"
+#alias pyinit='\
+#eval "$(pyenv init -)"; \
+#eval "$(pyenv virtualenv-init -)"'
+#export PYENV_ROOT="$HOME/.pyenv"
+#export PATH="$PYENV_ROOT/bin:$PATH"
+
+#export PATH="$PYENV_ROOT/shims:$PATH"
+#export PYENV_ROOT="$HOME/.pyenv"
+#export PATH="$PYENV_ROOT/bin:$PATH"
+#eval "$(pyenv init --path)"
+#eval "$(pyenv init -)"
 
 ## Golang
 export GOROOT=/usr/local/go
 export PATH=$PATH:$GOROOT/bin
 
-## RISCV
-#export RISCV=${HOME}/workspace/riscv/toolchain
-
 ## caps -> ctrl
-if ! $isWSL ; then
-    if ! $isDocker ; then
+if [ $isWSL != true ]; then
+    if [ $isDocker != true ]; then
         setxkbmap -option ctrl:nocaps
     fi
 fi
@@ -188,6 +187,11 @@ fi
 export PERL_CPANM_OPT="--local-lib=~/perl5"
 export PATH=$HOME/perl5/bin:$PATH;
 export PERL5LIB=$HOME/perl5/lib/perl5:$PERL5LIB;
+
+## python uv
+export PATH="$HOME/.cargo/bin:$PATH"
+# .venvを有効化するためのエイリアス追加
+alias activate_venv="source $HOME/.venv/bin/activate"
 
 ## my app
 export PATH="${HOME}/tools/bin:${HOME}/tools/script:$PATH"
@@ -205,20 +209,12 @@ alias dispoff="sleep 1 && xset dpms force off"
 ## Vimdiff
 alias vimdiff="vimdiff -c 'set diffopt+=iwhite'"
 
+setxkbmap -layout jp
+
 EOS
+fi
 
 
 ## home directory rename
 #LANG=C xdg-user-dirs-update
 LANGUAGE=C LC_MESSAGES=C xdg-user-dirs-gtk-update
-
-## gnome show seconds
-gsettings set org.gnome.desktop.interface clock-show-seconds true
-
-cat << EOF > ~/.config/mozc/ibus_config.textproto 
-engines {
-    name : "mozc-jp"
-    longname : "Mozc"
-    layout : "jp"
-}
-EOF

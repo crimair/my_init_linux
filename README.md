@@ -28,3 +28,8 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 ```
 choco install neovim --pre
 ```
+
+emacsのキー配列が変な場合
+```
+setxkbmap -layout jp
+```

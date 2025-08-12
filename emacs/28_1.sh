@@ -27,7 +27,7 @@ CC="clang" CFLAGS="-O2 -march=native -I./src" LDFLAGS="-O2" \
   --with-xwidgets \
   --with-native-compilation \
   --with-json
-#make -j8
-#echo ${pass} | sudo -S make install
+make -j8
+echo ${pass} | sudo -S make install
 #  --with-x-toolkit=gtk3 \
 
